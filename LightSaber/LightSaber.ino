@@ -28,7 +28,7 @@ configable Variables
   #define ANALOG_IN A5//input from potentiometer
 
 
-#define MY_BRIGHTNESS 255//brightness 0-255
+#define MY_BRIGHTNESS 60//brightness 0-255
 #define NUM_COLORS 11
 const int t = 5;//delay time as we step through to get to the correct color
 
@@ -42,7 +42,7 @@ CRGB leds[NUM_LEDS];
 uint16_t pot = 0;
 bool isOn = false;
 bool wasOn = true;
-CRGB myColor[NUM_COLORS];
+CHSV myColor[NUM_COLORS];
 CRGB off = CRGB(0,0,0);
 
 
@@ -58,7 +58,7 @@ void setup()
 
   FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, NUM_LEDS);//setup the led strip
   FastLED.setBrightness(MY_BRIGHTNESS);//set brightness 0-255
-  // FastLED.setCorrection(TypicalPixelString);//Might need this to get proper colors
+  FastLED.setCorrection(TypicalPixelString);//Might need this to get proper colors
   FastLED.showColor(off);//set all LEDs to black immediately
   leds[0]   = CRGB(255,0,0);//set 1st led red
   leds[1]   = CRGB(0,255,0);//second green
@@ -68,17 +68,17 @@ void setup()
   leds[119] = CRGB(255,0,0);//set last led red
   FastLED.show();
   //array length is NUM_COLORS. This variable stores our array length
-  myColor[0]  = ColorHSLtoHSV(0,100,55);//Red
-  myColor[1]  = ColorHSLtoHSV(24,100,100);//Orange
-  myColor[2]  = ColorHSLtoHSV(42,100,98);//Yellow
-  myColor[3]  = ColorHSLtoHSV(67,100,85);//lime
-  myColor[4]  = ColorHSLtoHSV(120,100,100);//Green
-  myColor[5]  = ColorHSLtoHSV(180,100,100);//cyan
-  myColor[6]  = ColorHSLtoHSV(240,100,100);//Blue
-  myColor[7]  = ColorHSLtoHSV(271,50,40);//purple
-  myColor[8]  = ColorHSLtoHSV(300,100,100);//Magenta
-  myColor[9]  = ColorHSLtoHSV(336,54,98);//Pinkish
-  myColor[10] = ColorHSLtoHSV(0,0,100);//white
+  myColor[0]  = CHSV(0,255,142);//Red
+  myColor[1]  = CHSV(32,255,255);//Orange
+  myColor[2]  = CHSV(64,255,250);//Yellow
+  myColor[3]  = CHSV(80,255,225);//lime
+  myColor[4]  = CHSV(96,255,255);//Green
+  myColor[5]  = CHSV(140,255,255);//cyan
+  myColor[6]  = CHSV(171,255,255);//Blue
+  myColor[7]  = CHSV(190,128,100);//purple
+  myColor[8]  = CHSV(210,255,255);//Magenta
+  myColor[9]  = CHSV(220,140,250);//Pinkish
+  myColor[10] = CHSV(0,0,255);//white
   FastLED.delay(1000);
   FastLED.showColor(off);
   FastLED.show();
@@ -103,6 +103,9 @@ void loop()
     // Serial.print(", pot: ");
     // Serial.print(pot);
     // Serial.print(", rgb: ");
+    Serial.print(index);
+    Serial.print("/");
+    Serial.println(NUM_COLORS - 1);
     if (index < NUM_COLORS)
     {
       // Serial.println(myColor[index]);
@@ -123,9 +126,10 @@ void loop()
     {
       leds[i] = off;
       leds[j] = off;
+      FastLED.show();
       FastLED.delay(t);//show and delay for t milliseconds
       fadeToBlackBy(leds,NUM_LEDS,(NUM_LEDS/2)/MY_BRIGHTNESS);
-      Serial.print("i is: ");
+      Serial.print("Off Mode:\ni is: ");
       Serial.print(i);
       Serial.print(", j is: ");
       Serial.println(j);
@@ -142,27 +146,34 @@ void loop()
 ################################################################################
 Methods
 */
-void ColorPickyBoy(uint32_t color)
+void ColorPickyBoy(CHSV color)
 {
   if (isOn)
   {
     int i = 0;
     int j = NUM_LEDS-1;
-    while(i < 60)
+    while(i < NUM_LEDS/2)
     {
       leds[i] = color;
       leds[j] = color;
+      FastLED.show();
       FastLED.delay(t);//show and delay for t milliseconds
+      Serial.print("On Mode:\ni is: ");
+      Serial.print(i);
+      Serial.print(", j is: ");
+      Serial.println(j);
       i++;
       j--;
     }//while
+    Serial.println("\n--------------------------------------------------");
   }//if on
 }//colorPickyBoy()
-
+/*
 CHSV ColorHSLtoHSV(uint16_t hue, uint8_t sat, uint8_t level)
 {
   uint8_t tHue = (255/360) * hue;
   uint8_t tSat = (255/100) * sat;
   uint8_t tValue = (255/100) * level;
-  CHSV(tHue, tSat, tValue);
+  return CHSV(tHue, tSat, tValue);
 }
+*/
