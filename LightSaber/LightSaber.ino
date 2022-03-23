@@ -4,7 +4,7 @@
 
 //define number of LEDs on strip
 #define NUM_LEDS 120
-//#define BRIGHTNESS 255 //max 255
+//#define BRIGHTNESS 100 //max 255
 
 //bool bsA = false;
 //bool bsB = false;
@@ -28,7 +28,7 @@ configable Variables
   #define ANALOG_IN A5//input from potentiometer
 
 
-#define MY_BRIGHTNESS 60//brightness 0-255
+#define MY_BRIGHTNESS 255//brightness 0-255
 #define NUM_COLORS 11
 const int t = 5;//delay time as we step through to get to the correct color
 
@@ -69,13 +69,13 @@ void setup()
   FastLED.show();
   //array length is NUM_COLORS. This variable stores our array length
   myColor[0]  = CHSV(0,255,142);//Red
-  myColor[1]  = CHSV(32,255,255);//Orange
+  myColor[1]  = CHSV(24,255,255);//Orange
   myColor[2]  = CHSV(64,255,250);//Yellow
   myColor[3]  = CHSV(80,255,225);//lime
   myColor[4]  = CHSV(96,255,255);//Green
   myColor[5]  = CHSV(140,255,255);//cyan
-  myColor[6]  = CHSV(171,255,255);//Blue
-  myColor[7]  = CHSV(190,128,100);//purple
+  myColor[6]  = CHSV(165,255,255);//Blue
+  myColor[7]  = CHSV(180,160,250);//purple
   myColor[8]  = CHSV(210,255,255);//Magenta
   myColor[9]  = CHSV(220,140,250);//Pinkish
   myColor[10] = CHSV(0,0,255);//white
