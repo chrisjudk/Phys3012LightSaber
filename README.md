@@ -1,5 +1,6 @@
 # Phys3012LightSaber
 ## Resources
+### References
 <dl>
   <dt>Adafruit Best Practices</dt>
     <dd><a href=https://learn.adafruit.com/adafruit-neopixel-uberguide/best-practices>adafruit.com</a></dd>
@@ -9,7 +10,7 @@
     <dd><a href=https://learn.adafruit.com/adafruit-neopixel-uberguide/powering-neopixels>adafruit.com</a></dd>
 </dl>
 
-## Things to buy
+### Things to buy
 <dl>
   <dt>Battery Charger IC</dt>
     <dd><a href=https://www.microchip.com/en-us/products/power-management/battery-charger-ics>microchip.com</a></dd>
