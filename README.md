@@ -8,6 +8,7 @@
   <dt>Adafruit power</dt>
     <dd><a href=https://learn.adafruit.com/adafruit-neopixel-uberguide/powering-neopixels>adafruit.com</a></dd>
 </dl>
+
 ## Things to buy
 <dl>
   <dt>Battery Charger IC</dt>
