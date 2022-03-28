@@ -1,4 +1,4 @@
-# Phys3012LightSaber
+# Phys3012 - LightSaber
 ## Resources
 ### References
 - Adafruit Best Practices
