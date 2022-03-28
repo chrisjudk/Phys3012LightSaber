@@ -1,4 +1,7 @@
 # Phys3012 - LightSaber
+## Installation
+### Dependencies
+1) FastLED
 ## Resources
 ### References
 - Adafruit Best Practices
