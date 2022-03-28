@@ -1,5 +1,8 @@
 # Phys3012 - LightSaber
 ## Installation
+### Hardware
+1) Arduino Uno [Testing]
+2) Teensy?
 ### Dependencies
 1) FastLED
 ## Resources
