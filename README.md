@@ -20,3 +20,5 @@
   * [microchip.com](https://www.microchip.com/en-us/products/power-management/battery-charger-ics)
 - Battery/Batteries
   * [imrbatteries.com](https://www.imrbatteries.com/samsung-50e-21700-5000mah-9-8a-battery/)
+- Speaker
+  * [amazon.com](https://www.amazon.com/Uxcell-a15080600ux0275-Internal-Magnet-Speaker/dp/B0177ABRQ6/ref=sr_1_3?crid=EVIYYMKISZID&keywords=28+mm+speaker&qid=1648666937&sprefix=28+mm+speaker%2Caps%2C124&sr=8-3)
