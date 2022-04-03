@@ -17,8 +17,9 @@
 
 ### Things to buy
 - Battery Charger IC
-  * [microchip.com](https://www.microchip.com/en-us/products/power-management/battery-charger-ics)
+  * [ ] [microchip.com](https://www.addicore.com/TP4056-Charger-and-Protection-Module-p/ad310.htm)
 - Battery/Batteries
-  * [imrbatteries.com](https://www.imrbatteries.com/samsung-50e-21700-5000mah-9-8a-battery/)
+  * [ ] [imrbatteries.com (x2)](https://www.imrbatteries.com/samsung-50e-21700-5000mah-9-8a-battery/)
 - Speaker
   * [x] [amazon.com](https://www.amazon.com/Uxcell-a15080600ux0275-Internal-Magnet-Speaker/dp/B0177ABRQ6/ref=sr_1_3?crid=EVIYYMKISZID&keywords=28+mm+speaker&qid=1648666937&sprefix=28+mm+speaker%2Caps%2C124&sr=8-3)
+    - Purchased by Mike
