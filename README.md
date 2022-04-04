@@ -1,4 +1,4 @@
-/dirtymike07//# Phys3012 - LightSaber
+# Phys3012 - LightSaber
 ## Installation
 ### Hardware
 - Arduino Uno [Testing]
