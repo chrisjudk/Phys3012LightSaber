@@ -1,5 +1,6 @@
 #define RA 2
 #define RB 3
+#define NUM_COLORS 11
 
 int counter = 0;
 int currentStateRA;
@@ -35,14 +36,17 @@ void encoder()
   {
     if(digitalRead(RB) != currentStateRA)
     {
-      counter--;
-      rotDir = "CCW";
-    }
-    else
-    {
       counter++;
       rotDir = "CW";
     }
+    else
+    {
+      counter--;
+      rotDir = "CCW";
+    }
+    delayMicroseconds(1000);
+    if(counter < 0) {counter = NUM_COLORS - 1;}
+    else if(counter >= NUM_COLORS) {counter = 0;}
     Serial.print("Counter: ");
     Serial.print(counter);
     Serial.print(" | Dir: ");
