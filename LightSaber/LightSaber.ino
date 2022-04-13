@@ -28,7 +28,7 @@ configable Variables
   #define ANALOG_IN A5//input from potentiometer
 
 
-#define MY_BRIGHTNESS 255//brightness 0-255
+#define MY_BRIGHTNESS 180//brightness 0-255
 #define NUM_COLORS 11
 const int t = 5;//delay time as we step through to get to the correct color
 
@@ -45,8 +45,6 @@ bool wasOn = true;
 CHSV myColor[NUM_COLORS];
 CRGB off = CRGB(0,0,0);
 
-
-
 /*
 ################################################################################
 Setup
@@ -58,6 +56,7 @@ void setup()
 
   FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, NUM_LEDS);//setup the led strip
   FastLED.setBrightness(MY_BRIGHTNESS);//set brightness 0-255
+  FastLED.setMaxPowerInMilliWatts(25000);
   FastLED.setCorrection(TypicalPixelString);//Might need this to get proper colors
   FastLED.showColor(off);//set all LEDs to black immediately
   leds[0]   = CRGB(255,0,0);//set 1st led red
