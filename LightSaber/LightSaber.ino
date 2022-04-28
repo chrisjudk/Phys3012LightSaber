@@ -13,10 +13,9 @@ configable Variables
   #define LED_PIN 6
   #define PBU 2
   #define PBD 3
-  #define TOGGLE 3//toggle on function
-  #define ANALOG_IN A5//input from potentiometer
-
-#define MY_BRIGHTNESS 180//brightness 0-255
+  #define TOGGLE 4//toggle on function
+  
+#define MY_BRIGHTNESS 128//brightness 0-255
 #define NUM_COLORS 11
 const int t = 5;//delay time as we step through to get to the correct color
 
@@ -27,8 +26,8 @@ Variables
 
 CRGB leds[NUM_LEDS];
 volatile uint8_t count = 0;
-ulong prevIntUp = 0;
-ulong prevIntDown = 0;
+uint32_t prevIntUp = 0;
+uint32_t prevIntDown = 0;
 bool isOn = false;
 bool wasOn = true;
 CHSV myColor[NUM_COLORS];
@@ -92,8 +91,6 @@ void loop()
   isOn = digitalRead(TOGGLE);
   if(isOn)
   {
-    pot = analogRead(ANALOG_IN);//read in potentiometer value //[0,1023]
-
     Serial.print(count);
     Serial.print("/");
     Serial.println(NUM_COLORS - 1);
@@ -161,7 +158,7 @@ void ColorPickyBoy(CHSV color)
 
 void NextColorBoy()
 {
-  ulong interruptTime = millis();
+  uint32_t interruptTime = millis();
   if (interruptTime - prevIntUp > 50)
   {
     if (count < 10)
@@ -174,7 +171,7 @@ void NextColorBoy()
 
 void PrevColorBoy()
 {
-  ulong interruptTime = millis()
+  uint32_t interruptTime = millis();
   if (interruptTime - prevIntDown > 50)
   {
     if (count > 0)
