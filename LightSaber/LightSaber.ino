@@ -1,6 +1,12 @@
 //LightSaber V3.3
 #include <FastLED.h>
-
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
+#include <utility/imumaths.h>
+//#include <DFRobotDFPlayerMini.h>
+#include <DFPlayerMini_Fast.h>
+#include <SoftwareSerial.h> //RX and TX lines
 //define number of LEDs on strip
 #define NUM_LEDS 120
 
@@ -14,7 +20,9 @@ configable Variables
   #define PBU 2
   #define PBD 3
   #define TOGGLE 4//toggle on function
-  
+  #define MP3RX 10
+  #define MP3TX 11
+
 #define MY_BRIGHTNESS 128//brightness 0-255
 #define NUM_COLORS 11
 const int t = 5;//delay time as we step through to get to the correct color
@@ -32,6 +40,10 @@ bool isOn = false;
 bool wasOn = true;
 CHSV myColor[NUM_COLORS];
 CRGB off = CRGB(0,0,0);
+SoftwareSerial mySoftwareSerial(MP3RX, MP3TX); //Setup communication with MP3 Module
+//DFRobot
+DFPlayerMini_Fast myDFPlayer; // Naming the module
+Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
 /*
 ################################################################################
@@ -40,7 +52,6 @@ Setup
 
 void setup()
 {
-  Serial.begin(38400);
   pinMode(TOGGLE, INPUT);
   pinMode(PBU, INPUT);
   pinMode(PBD, INPUT);
@@ -78,7 +89,15 @@ void setup()
   FastLED.delay(1000);
   FastLED.showColor(off);
   FastLED.show();
-  Serial.println("Setup done!");
+
+  //moving on to mp3 Setup
+  bno.begin();
+  /* Initialise the sensor */
+  bno.setExtCrystalUse(true);
+  mySoftwareSerial.begin(9600);
+  myDFPlayer.begin(mySoftwareSerial);
+  myDFPlayer.stop();
+  myDFPlayer.volume(30); // setting volume from 1-30
 }//setup()
 
 /*
@@ -91,23 +110,23 @@ void loop()
   isOn = digitalRead(TOGGLE);
   if(isOn)
   {
-    Serial.print(count);
-    Serial.print("/");
-    Serial.println(NUM_COLORS - 1);
+    if (!wasOn)
+    {
+      myDFPlayer.play(1);// on sound
+      while (myDFPlayer.isPlaying());
+    }
+    if (!myDFPlayer.isPlaying())
+      myDFPlayer.play(2); // constant while on sound
     if (count < NUM_COLORS)
     {
-      // Serial.println(myColor[index]);
       ColorPickyBoy(myColor[count]);
     }
-    else
-    {
-      Serial.print("Array index trying to go out of bounds! Index was: ");
-      Serial.println(count);
-    }//else
+    isMoving();
     wasOn = true;
   }//if on
   if(!isOn && wasOn)
   {
+    myDFPlayer.play(3); // off sound
     int i = NUM_LEDS/2 - 1;
     int j = NUM_LEDS/2;
     while(i >= 0)
@@ -117,13 +136,10 @@ void loop()
       FastLED.show();
       FastLED.delay(t);//show and delay for t milliseconds
       fadeToBlackBy(leds,NUM_LEDS,(NUM_LEDS/2)/MY_BRIGHTNESS);
-      Serial.print("Off Mode:\ni is: ");
-      Serial.print(i);
-      Serial.print(", j is: ");
-      Serial.println(j);
       i--;
       j++;
     }
+    while (myDFPlayer.isPlaying());
     wasOn = false;
   }//turn off
 }//loop()
@@ -132,6 +148,17 @@ void loop()
 ################################################################################
 Methods
 */
+void isMoving()
+{
+  imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
+
+  if(acc.z() > 10)
+  {
+    //Lightsaber Swing Noise
+    myDFPlayer.play(4); //swing sound
+    while(myDFPlayer.isPlaying());
+  }//fi
+}//isMoving()
 
 void ColorPickyBoy(CHSV color)
 {
@@ -145,14 +172,9 @@ void ColorPickyBoy(CHSV color)
       leds[j] = color;
       FastLED.show();
       FastLED.delay(t);//show and delay for t milliseconds
-      Serial.print("On Mode:\ni is: ");
-      Serial.print(i);
-      Serial.print(", j is: ");
-      Serial.println(j);
       i++;
       j--;
     }//while
-    Serial.println("\n--------------------------------------------------");
   }//if on
 }//colorPickyBoy()
 
@@ -181,37 +203,3 @@ void PrevColorBoy()
   }
   prevIntDown = interruptTime;
 }
-
-/*
-Anything down here is not actually in use, will be removed for production version
-*/
-
-//#define BRIGHTNESS 100 //max 255
-
-//int iA = 2;//rotary encoder dataA
-//int iB = 4;//rotary encoder dataB
-
-// Serial.print("Index: ");
-// Serial.print(index);
-// Serial.print(", pot: ");
-// Serial.print(pot);
-// Serial.print(", rgb: ");
-
-//bool bsA = false;
-//bool bsB = false;
-//bool bsC = false;
-//bool bsAprev= false;
-//bool bsBprev= false;
-
-//Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
-
-
-/*
-CHSV ColorHSLtoHSV(uint16_t hue, uint8_t sat, uint8_t level)
-{
-  uint8_t tHue = (255/360) * hue;
-  uint8_t tSat = (255/100) * sat;
-  uint8_t tValue = (255/100) * level;
-  return CHSV(tHue, tSat, tValue);
-}
-*/
