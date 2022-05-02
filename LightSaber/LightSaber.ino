@@ -20,8 +20,8 @@ configable Variables
   #define PBU 2
   #define PBD 3
   #define TOGGLE 4//toggle on function
-  #define MP3RX 10
-  #define MP3TX 11
+  #define MP3RX 11
+  #define MP3TX 10
 
 #define MY_BRIGHTNESS 128//brightness 0-255
 #define NUM_COLORS 11
@@ -97,7 +97,9 @@ void setup()
   mySoftwareSerial.begin(9600);
   myDFPlayer.begin(mySoftwareSerial);
   myDFPlayer.stop();
+  myDFPlayer.reset();
   myDFPlayer.volume(30); // setting volume from 1-30
+  myDFPlayer.loop(false);
 }//setup()
 
 /*
@@ -113,19 +115,20 @@ void loop()
     if (!wasOn)
     {
       myDFPlayer.play(1);// on sound
-      while (myDFPlayer.isPlaying());
+      delay(15);
     }
-    if (!myDFPlayer.isPlaying())
-      myDFPlayer.play(2); // constant while on sound
+    myDFPlayer.loop(2);
+    wasOn = true;
+    myDFPlayer.stop();
     if (count < NUM_COLORS)
     {
       ColorPickyBoy(myColor[count]);
     }
     isMoving();
-    wasOn = true;
   }//if on
   if(!isOn && wasOn)
   {
+    wasOn = false;
     myDFPlayer.play(3); // off sound
     int i = NUM_LEDS/2 - 1;
     int j = NUM_LEDS/2;
@@ -140,7 +143,6 @@ void loop()
       j++;
     }
     while (myDFPlayer.isPlaying());
-    wasOn = false;
   }//turn off
 }//loop()
 
@@ -152,9 +154,9 @@ void isMoving()
 {
   imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
 
-  if(acc.z() > 10)
+  if(acc.z() > 25)
   {
-    //Lightsaber Swing Noise
+    //Lightsaber Swing Noise 
     myDFPlayer.play(4); //swing sound
     while(myDFPlayer.isPlaying());
   }//fi
