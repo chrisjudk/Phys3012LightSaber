@@ -1,4 +1,4 @@
-//LightSaber V3.3
+//LightSaber V4.0
 #include <FastLED.h>
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
