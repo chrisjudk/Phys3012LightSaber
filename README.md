@@ -1,11 +1,17 @@
 # Phys3012 - LightSaber
 ## Installation
 ### Hardware
-- Arduino Uno [Testing]
-- Teensy?
+- Teensy 3.2
 - Neopixels (WS2812B) [GRB]
+- DfRobot DFPlayer Mini
+- Adafruit BNO055 Orientation Module
 ### Dependencies
 1) FastLED
+2) Adafruit_Sensor
+3) Asdafruit_BNO005
+4) utility/imumaths
+5) DFPlayerMini_Fast
+6) SoftwareSerial
 ## Resources
 ### References
 - Adafruit Best Practices
