@@ -39,7 +39,7 @@
     - Acquired by [@dirtymike07](https://www.github.com/dirtymike07/)
 - Acrylic Tubing (Need to get dimensions)
   * [x] Need to get source
-- Arduino Teensy
+- Teensy
   * [x] From electronics lab supplies
 - Wires, breadboard(s), etc.
   * [x] From electronics lab supplies
